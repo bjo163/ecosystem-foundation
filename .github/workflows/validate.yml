@@ -17,8 +17,12 @@ jobs:
         with:
           python-version: "3.x"
       - name: Validate contract JSON
+        run: python -m json.tool specifications/foundation-contract.json >/dev/null
+      - name: Validate contract instance JSON
         run: python -m json.tool specifications/foundation-contract.instance.json >/dev/null
       - name: Validate repository foundation
         run: python tools/validate-foundation.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validate Python tooling syntax
         run: python -m compileall -q tools tests
