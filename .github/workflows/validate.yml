@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
@@ -22,7 +23,17 @@ jobs:
         run: python -m json.tool specifications/foundation-contract.instance.json >/dev/null
       - name: Validate repository foundation
         run: python tools/validate-foundation.py
-      - name: Run unit tests
+      - name: Run Python tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validate Python tooling syntax
         run: python -m compileall -q tools tests
+
+      - uses: actions/setup-rust@v1
+        with:
+          toolchain: stable
+      - name: Check ecosystem-init
+        working-directory: tools/ecosystem-init
+        run: cargo check
+      - name: Test ecosystem-init
+        working-directory: tools/ecosystem-init
+        run: cargo test --all-targets
