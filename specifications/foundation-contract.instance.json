@@ -7,10 +7,19 @@
     "PROJECT",
     "REPOSITORY",
     "SOURCE",
-    "MODULE_OR_COMPONENT"
+    "UNIT",
+    "MODULE",
+    "COMPONENT",
+    "ELEMENT",
+    "IMPLEMENTATION"
   ],
   "canonicalVocabulary": [
     "source",
+    "unit",
+    "module",
+    "component",
+    "element",
+    "implementation",
     "tests",
     "examples",
     "fixtures",
@@ -32,5 +41,5 @@
     {"name": "monorepo", "purpose": "Repository containing multiple related packages or applications", "requiredConcepts": ["source", "tests", "tools"]}
   ],
   "rootManifestPolicy": "Project, dependency, workspace, package, or build manifests remain at repository root unless the native ecosystem requires another location.",
-  "nativeLayoutPolicy": "The contract governs responsibility and boundaries. Language/framework-native directory names may remain unchanged; a profile maps them to canonical concepts."
+  "nativeLayoutPolicy": "The contract governs responsibility and boundaries. Language/framework-native directory names may remain unchanged; a profile maps them to canonical concepts. Universal internal hierarchy terms do not require physical directories."
 }
