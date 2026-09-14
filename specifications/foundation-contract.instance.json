@@ -1,0 +1,36 @@
+{
+  "contractVersion": "0.2.0",
+  "hierarchy": [
+    "ECOSYSTEM",
+    "ORGANIZATION",
+    "DOMAIN",
+    "PROJECT",
+    "REPOSITORY",
+    "SOURCE",
+    "MODULE_OR_COMPONENT"
+  ],
+  "canonicalVocabulary": [
+    "source",
+    "tests",
+    "examples",
+    "fixtures",
+    "tools",
+    "scripts",
+    "configuration",
+    "data",
+    "documentation",
+    "specifications",
+    "infrastructure",
+    "deployment",
+    "assets"
+  ],
+  "profiles": [
+    {"name": "library", "purpose": "Reusable software library or SDK", "requiredConcepts": ["source", "tests"]},
+    {"name": "application", "purpose": "End-user application or executable product", "requiredConcepts": ["source", "tests"]},
+    {"name": "service", "purpose": "Long-running API, worker, or backend service", "requiredConcepts": ["source", "tests", "configuration"]},
+    {"name": "cli", "purpose": "Command-line application", "requiredConcepts": ["source", "tests"]},
+    {"name": "monorepo", "purpose": "Repository containing multiple related packages or applications", "requiredConcepts": ["source", "tests", "tools"]}
+  ],
+  "rootManifestPolicy": "Project, dependency, workspace, package, or build manifests remain at repository root unless the native ecosystem requires another location.",
+  "nativeLayoutPolicy": "The contract governs responsibility and boundaries. Language/framework-native directory names may remain unchanged; a profile maps them to canonical concepts."
+}
