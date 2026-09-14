@@ -9,7 +9,7 @@
     "hierarchy": {
       "type": "array",
       "items": { "type": "string" },
-      "minItems": 7
+      "minItems": 11
     },
     "canonicalVocabulary": {
       "type": "array",
