@@ -1,7 +1,7 @@
 # Ecosystem Foundation Contract
 
-Version: `0.1`
-Status: `draft-baseline`
+Version: `0.2`
+Status: `normative-baseline`
 
 ## Purpose
 
@@ -18,12 +18,13 @@ ECOSYSTEM > ORGANIZATION > DOMAIN > PROJECT > REPOSITORY > SOURCE > MODULE/COMPO
 ## Mandatory principles
 
 - Organization governance must not be hidden inside an individual application's source tree.
-- Repository manifests belong to the repository root.
+- Repository manifests belong to the repository root by default.
 - Repository conventions must remain language-agnostic.
 - Native ecosystem conventions may be preserved by a language profile.
 - Generated artifacts are not source by default.
-- A directory must have one clear ownership/responsibility.
+- A directory must have one clear responsibility.
 - Do not create duplicate directories with overlapping responsibility.
+- Profiles must prefer the smallest structure that communicates responsibility.
 
 ## Canonical vocabulary
 
@@ -43,9 +44,11 @@ deployment
 assets
 ```
 
-## Non-canonical aliases
+These are canonical **concepts**. A concrete repository does not need every directory and may use a native equivalent.
 
-The following terms remain valid when required by a language or framework, but are not organization-wide vocabulary:
+## Native aliases
+
+The following remain valid when required by a language or framework:
 
 ```text
 src
@@ -58,12 +61,32 @@ pkg
 internal
 modules
 components
+docs
+config
+deploy
+infra
 ```
 
-## Compatibility rule
+Aliases are mappings, not additional responsibilities. A repository should not keep both canonical and alias directories for the same responsibility without an explicit reason.
 
-A repository does not need to rename native directories solely for vocabulary compliance. The standard governs responsibility and boundaries first; physical names may be mapped by a profile.
+## Manifest rule
+
+Project/package/build/workspace manifests are repository-root metadata unless the native ecosystem requires another location.
+
+Examples:
+
+```text
+Cargo.toml
+package.json
+pnpm-workspace.yaml
+go.mod
+pyproject.toml
+pom.xml
+build.gradle
+```
+
+Monorepos may additionally contain child manifests in their workspace members.
 
 ## Change control
 
-Changes to the canonical hierarchy or vocabulary require an architecture/standards decision and an update to this contract before templates are changed.
+Changes to hierarchy, canonical vocabulary, or profile semantics require a standards/architecture decision and an update to the machine-readable contract before templates are changed.
