@@ -10,6 +10,29 @@ import json
 from pathlib import Path
 import sys
 
+CANONICAL_HIERARCHY = [
+    "ECOSYSTEM",
+    "ORGANIZATION",
+    "DOMAIN",
+    "PROJECT",
+    "REPOSITORY",
+    "SOURCE",
+    "UNIT",
+    "MODULE",
+    "COMPONENT",
+    "ELEMENT",
+    "IMPLEMENTATION",
+]
+
+REQUIRED_VOCABULARY = {
+    "source",
+    "unit",
+    "module",
+    "component",
+    "element",
+    "implementation",
+}
+
 ALIAS_GROUPS = {
     "documentation": {"documentation", "docs"},
     "configuration": {"configuration", "config"},
@@ -41,11 +64,24 @@ def load_contract(path: Path) -> dict:
 
 def check(root: Path, contract: dict) -> list[str]:
     errors: list[str] = []
-    canonical = set(contract["canonicalVocabulary"])
 
     for required in ("contractVersion", "hierarchy", "canonicalVocabulary", "profiles"):
         if required not in contract:
             errors.append(f"contract missing field: {required}")
+
+    hierarchy = contract.get("hierarchy", [])
+    if hierarchy != CANONICAL_HIERARCHY:
+        errors.append(
+            "hierarchy mismatch: expected "
+            + " > ".join(CANONICAL_HIERARCHY)
+            + ", got "
+            + " > ".join(str(item) for item in hierarchy)
+        )
+
+    canonical = set(contract.get("canonicalVocabulary", []))
+    missing_vocabulary = sorted(REQUIRED_VOCABULARY - canonical)
+    if missing_vocabulary:
+        errors.append("canonical vocabulary missing: " + ", ".join(missing_vocabulary))
 
     for name in contract.get("canonicalVocabulary", []):
         if not name or name != name.strip() or "/" in name or "\\" in name:
