@@ -1,6 +1,6 @@
 # Ecosystem Foundation
 
-A language-agnostic foundation for organizing software ecosystems from ecosystem-level governance down to project repositories and source code.
+A language-agnostic foundation for organizing software ecosystems from ecosystem-level governance down to project repositories and source implementation.
 
 ## Purpose
 
@@ -14,13 +14,31 @@ ECOSYSTEM
     └── DOMAIN (optional)
         └── PROJECT
             └── REPOSITORY
-                ├── MANIFEST / METADATA
-                ├── SOURCE
-                │   └── MODULE / COMPONENT
-                └── SUPPORTING MATERIAL
+                └── SOURCE
+                    └── UNIT
+                        └── MODULE
+                            └── COMPONENT
+                                └── ELEMENT
+                                    └── IMPLEMENTATION
 ```
 
-The hierarchy is conceptual. Git hosting may represent organization, domain, project, and repository through different native mechanisms.
+The hierarchy is conceptual. Git hosting and programming languages may represent these concepts through different native mechanisms.
+
+## Universal vs native terminology
+
+Universal terminology defines semantic identity and relationships. Native terminology remains unchanged inside implementation repositories.
+
+```text
+Universal      Native examples
+SOURCE         src/ ; apps/ ; packages/ ; crates/
+UNIT           crate ; package ; application ; library ; service
+MODULE         module ; package ; namespace
+COMPONENT      component ; class ; struct ; service component
+ELEMENT        function ; method ; type ; interface ; handler
+IMPLEMENTATION concrete implementation logic
+```
+
+`UNIT`, `MODULE`, `COMPONENT`, `ELEMENT`, and `IMPLEMENTATION` are not required physical directory names. A repository MUST NOT create `unit/`, `module/`, `component/`, `element/`, or `implementation/` solely for conformance.
 
 ## Repository vocabulary
 
@@ -92,4 +110,4 @@ Changes to the canonical hierarchy, vocabulary, or profile semantics require an 
 
 ## Version
 
-Foundation contract: `0.2` — normative baseline with machine-readable contract, profiles, validator, regression tests, and CI.
+Foundation contract: `0.2` — normative baseline with machine-readable hierarchy vocabulary, profiles, validator, regression tests, and CI.
