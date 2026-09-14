@@ -1,0 +1,8 @@
+[package]
+name = "ecosystem-init"
+version = "0.1.0"
+edition = "2021"
+description = "Native CLI generator for Ecosystem Foundation repository profiles"
+license = "MIT"
+
+[dependencies]
