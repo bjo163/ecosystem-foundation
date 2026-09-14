@@ -4,14 +4,14 @@ A language-agnostic foundation for organizing software ecosystems from ecosystem
 
 ## Purpose
 
-This repository defines the canonical vocabulary, hierarchy, boundaries, and templates used to create and maintain consistent software repositories across different languages and platforms.
+This repository is the source of truth for ecosystem vocabulary, hierarchy, boundaries, repository profiles, and machine-checkable rules used to keep software projects consistent across languages and platforms.
 
-## Hierarchy
+## Canonical hierarchy
 
 ```text
 ECOSYSTEM
 └── ORGANIZATION
-    └── DOMAIN
+    └── DOMAIN (optional)
         └── PROJECT
             └── REPOSITORY
                 ├── MANIFEST / METADATA
@@ -25,47 +25,48 @@ The hierarchy is conceptual. Git hosting may represent organization, domain, pro
 ## Repository vocabulary
 
 ```text
-source/             source code
- tests/              automated tests
-examples/            runnable/documented examples
-fixtures/            test/reference data
-tools/              developer/internal tools
-scripts/            automation
-configuration/      configuration
-data/               project data
-documentation/      explanatory documentation
-specifications/     formal contracts and specifications
-infrastructure/     infrastructure definitions
-deployment/         deployment/release definitions
-assets/             non-code resources
+source             source code responsibility
+tests              automated verification
+examples           runnable/documented examples
+fixtures           stable test/reference data
+tools              developer/internal software tools
+scripts             automation glue
+configuration      configuration and templates
+data               project-owned/reference data
+documentation      human-facing explanation
+specifications     formal contracts, schemas, protocols, requirements
+infrastructure     infrastructure definitions
+deployment         deployment/release definitions
+assets              non-code resources
 ```
 
-These are **canonical concepts, not mandatory folders**. A repository only creates the directories it actually needs.
+These are canonical concepts, not mandatory physical directory names. A concrete repository creates only what it needs.
+
+## Manifest rule
+
+Project, dependency, package, workspace, and build manifests live at repository root by default.
+
+Examples:
+
+```text
+Cargo.toml
+package.json
+pnpm-workspace.yaml
+go.mod
+pyproject.toml
+pom.xml
+build.gradle
+```
+
+Monorepos may also have child manifests inside workspace members.
 
 ## Language neutrality
 
-The foundation does not replace native language terminology.
+The foundation governs responsibility and boundaries, not compiler-specific naming. Rust can keep `src/` and `Cargo.toml`; Go can keep `package`/`internal`; TypeScript can keep `packages/`; Python can keep its package/module layout.
 
-- Rust may use Cargo, crates, modules, and `Cargo.toml`.
-- JavaScript/TypeScript may use pnpm, npm packages, and `package.json`.
-- Go may use modules and packages.
-- Python may use packages and modules.
-- Java may use Maven/Gradle modules and packages.
+## Profiles
 
-Language-specific organization belongs inside the repository's source/build model.
-
-## Design rules
-
-1. Keep organization/governance separate from repository implementation.
-2. Keep repository conventions separate from language/framework conventions.
-3. Treat manifest files as repository-root metadata.
-4. Do not create parallel concepts merely because a language uses a different term.
-5. Prefer the smallest structure that clearly communicates responsibility.
-6. Do not commit generated build output unless a project explicitly requires it.
-
-## Repository profiles
-
-Profiles will be added under `templates/` for common repository types:
+Profiles under `templates/` cover:
 
 - library
 - application
@@ -73,6 +74,22 @@ Profiles will be added under `templates/` for common repository types:
 - cli
 - monorepo
 
-## Status
+Each profile selects the smallest useful structure and preserves native language conventions.
 
-Foundation v0.1 — vocabulary and boundaries established. Template profiles and machine-checkable contracts are the next layer.
+## Validation
+
+The repository includes a dependency-free Python validator:
+
+```bash
+python tools/validate-foundation.py
+```
+
+CI runs the validator, verifies the machine-readable contract, and checks Python tooling syntax on pushes and pull requests.
+
+## Governance
+
+Changes to the canonical hierarchy, vocabulary, or profile semantics require an architecture/standards decision and an update to the normative contract.
+
+## Version
+
+Foundation contract: `0.2` — normative baseline with machine-readable contract, profiles, validator, regression tests, and CI.
