@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/bjo163/ecosystem-foundation/schema/foundation-contract.json",
+  "title": "Ecosystem Foundation Contract",
+  "type": "object",
+  "required": ["contractVersion", "hierarchy", "canonicalVocabulary", "profiles"],
+  "properties": {
+    "contractVersion": { "type": "string" },
+    "hierarchy": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 7
+    },
+    "canonicalVocabulary": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "purpose", "requiredConcepts"],
+        "properties": {
+          "name": { "type": "string" },
+          "purpose": { "type": "string" },
+          "requiredConcepts": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rootManifestPolicy": { "type": "string" },
+    "nativeLayoutPolicy": { "type": "string" }
+  },
+  "additionalProperties": false
+}
