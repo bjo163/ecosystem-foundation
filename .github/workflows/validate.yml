@@ -28,9 +28,7 @@ jobs:
       - name: Validate Python tooling syntax
         run: python -m compileall -q tools tests
 
-      - uses: actions/setup-rust@v1
-        with:
-          toolchain: stable
+      - uses: dtolnay/rust-toolchain@stable
       - name: Check ecosystem-init
         working-directory: tools/ecosystem-init
         run: cargo check
